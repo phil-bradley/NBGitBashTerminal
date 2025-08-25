@@ -12,3 +12,5 @@ Select the nbm file
 Select Install
 
 This will create a menu item in the "Tools" menu. Select this to start git bash in a panel inside Netbeans.
+
+
