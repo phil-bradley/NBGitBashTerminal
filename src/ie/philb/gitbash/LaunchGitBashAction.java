@@ -5,12 +5,13 @@
 package ie.philb.gitbash;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Exceptions;
-import org.openide.windows.TopComponent;
+import org.openide.windows.Mode;
 import org.openide.windows.WindowManager;
 
 /**
@@ -28,16 +29,32 @@ import org.openide.windows.WindowManager;
         path = "Menu/Tools",
         position = 0
 )
-public final class LaunchGitBashAction implements ActionListener {
+public final class LaunchGitBashAction extends AbstractAction {
+
+    public LaunchGitBashAction() {
+        this(Icons.NEW_TERM);
+    }
+
+    public LaunchGitBashAction(ImageIcon icon) {
+        super("New Terminal", icon);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TopComponent tc = WindowManager.getDefault().findTopComponent(GitBashTopComponent.COMPONENT_ID);
-        if (tc != null) {
+        try {
+            GitBashTopComponent tc = new GitBashTopComponent();
+
+            Mode mode = WindowManager.getDefault().findMode("output");
+
+            if (mode != null) {
+                mode.dockInto(tc);
+            }
+
             tc.open();
             tc.requestActive();
-        } else {
-            Exceptions.printStackTrace(new Exception("Failed to find top component " + GitBashTopComponent.COMPONENT_ID));
+
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(new Exception("Failed to open GitBashTopComponent", ex));
         }
     }
 

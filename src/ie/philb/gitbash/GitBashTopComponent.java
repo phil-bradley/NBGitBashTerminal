@@ -14,8 +14,12 @@ import static ie.philb.gitbash.GitBashTopComponent.COMPONENT_ID;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import org.openide.util.Exceptions;
+import org.openide.util.ImageUtilities;
 
 /**
  *
@@ -38,14 +42,32 @@ public class GitBashTopComponent extends TopComponent {
 
     public GitBashTopComponent() {
 
+        setName(COMPONENT_ID);
+
+        setLayout(new BorderLayout());
+
+
+        JToolBar toolbar = new JToolBar();
+        toolbar.setFloatable(false);
+        toolbar.setOrientation(SwingConstants.VERTICAL);
+        
+        JButton btnNewTerm = new JButton(new LaunchGitBashAction(Icons.NEW_TERM));
+        btnNewTerm.setText(null);
+        btnNewTerm.setToolTipText("New Terminal");
+        toolbar.add(btnNewTerm);
+        
+        JButton btnOptions = new JButton(new LaunchGitBashAction(Icons.OPTIONS));
+        btnOptions.setText(null);
+        btnOptions.setToolTipText("Configure");
+        toolbar.add(btnOptions);
+        
+        add(toolbar, BorderLayout.WEST);
+
+        JediTermWidget terminal = new JediTermWidget(80, 24, new DefaultSettingsProvider());
+        add(terminal, BorderLayout.CENTER);
+
         try {
-            setName(COMPONENT_ID);
-            JediTermWidget terminal = new JediTermWidget(80, 24, new DefaultSettingsProvider());
-
-            setLayout(new BorderLayout());
-            add(terminal, BorderLayout.CENTER);
-
-            String[] command = {"C:\\Program Files\\Git\\bin\\bash.exe", "--login", "-i"};
+            String[] command = {GitBashSettings.getGitBashPath(), "--login", "-i"};
 
             PtyProcess process = PtyProcess.exec(command, null, null);
 

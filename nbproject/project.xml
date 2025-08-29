@@ -7,6 +7,15 @@
             <standalone/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>org.netbeans.modules.options.api</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.74</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.netbeans.modules.projectapi</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -96,11 +105,11 @@
             <class-path-extension>
                 <runtime-relative-path>ext/jna-5.17.0.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/jna-5.17.0.jar</binary-origin>
-            </class-path-extension>          
+            </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/jna-platform-5.17.0.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/jna-platform-5.17.0.jar</binary-origin>
-            </class-path-extension>               
+            </class-path-extension>
         </data>
     </configuration>
 </project>
